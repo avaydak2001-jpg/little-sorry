@@ -1,27 +1,27 @@
-A LITTLE SORRY — INTERACTIVE APOLOGY PAGE
+LITTLE SORRY — FIXED VERSION
 
-Files:
-- index.html: webpage structure
-- style.css: styling and animations
-- script.js: intro sequence and touch interactions
-- assets/character-original.jpeg: supplied character reference
+WHAT THIS VERSION FIXES
+1. The apology screen is the first screen on every fresh visit.
+2. It stays visible indefinitely. There is no intro timer and no automatic switch.
+3. The visitor must press "Click here to punish me 😶" to open the character screen.
+4. "Back to my apology" returns to the apology screen. It does not automatically reopen the character screen.
+5. Heart/love decorations have been replaced with tulips, flowers, stars and playful emojis.
+6. The character image is stored in the repository root and the HTML points to character-original.jpeg.
+7. Hair and cheek tap/swipe reactions and speech bubbles remain included.
 
-PREVIEW:
-Open index.html in a browser.
+UPLOAD THESE FOUR FILES TO THE ROOT OF THE EXISTING GITHUB REPOSITORY:
+- index.html
+- style.css
+- script.js
+- character-original.jpeg
 
-PUBLISH WITH GITHUB PAGES:
-1. Create a new PUBLIC repository on GitHub (for example: little-sorry).
-2. Upload all files and folders in this project. Keep the assets folder.
-3. Open repository Settings > Pages.
-4. Under Build and deployment, choose Deploy from a branch.
-5. Select the main branch and / (root), then Save.
-6. Wait for GitHub Pages to publish the site. The URL will look like:
-   https://YOUR-USERNAME.github.io/little-sorry/
+IPHONE STEPS
+1. Download and extract this ZIP in the Files app.
+2. Open the existing GitHub repository in Safari.
+3. Choose Add file > Upload files (or open the repository's upload page).
+4. Select the four files listed above from the extracted folder.
+5. Make sure they are uploaded at the repository root, not inside assets or another folder.
+6. Commit directly to the main branch.
+7. Wait for GitHub Pages to redeploy, then refresh the live page. If Safari shows a cached old version, open the site in a Private tab or clear the website cache.
 
-NOTES:
-- The site is static and does not need a server or database.
-- The character image is a single flattened reference image. The current prototype
-  animates the character as a whole during hair/cheek reactions. Separate hair and
-  facial layers or reaction artwork can be added in a later refinement for more
-  physically convincing deformation.
-- Test the published page on a phone before sharing it.
+Do not upload this ZIP file itself. Upload the four individual files.
