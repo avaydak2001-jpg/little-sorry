@@ -12,7 +12,6 @@
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
-    <!-- This is the first screen. It stays visible until the button is pressed. -->
     <section id="apology" class="screen apology-screen active" aria-labelledby="sorryTitle">
       <div class="floral-mark" aria-hidden="true">🌷 ✦ 🌼</div>
       <p class="eyebrow">A little something for you</p>
@@ -24,30 +23,34 @@
       <p class="tiny-note">No rush. I'll be right here. 🌼</p>
     </section>
 
-    <!-- Hidden until the visitor presses the button above. -->
-    <section id="characterStage" class="screen character-screen" aria-live="polite" aria-labelledby="punishmentTitle" hidden>
+    <section id="characterStage" class="screen character-screen" aria-labelledby="punishmentTitle" hidden>
       <div class="top-copy">
         <p class="eyebrow">A very serious matter ✦</p>
         <h2 id="punishmentTitle">I accept the <em>punishment</em> <span>🥺</span></h2>
       </div>
+
       <div class="character-window" id="characterWindow">
         <div class="character-wrap" id="characterWrap">
-          <img id="character" src="character-original.jpeg" alt="Your curly-haired cartoon character">
-          <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Tap the character's hair"></button>
-          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe the character's cheeks"></button>
-          <div class="reaction-lines" id="reactionLines" aria-hidden="true">✦　〰　✦</div>
+          <img id="character" src="character-original.jpeg" alt="Your curly-haired cartoon character" draggable="false">
+          <!-- A clipped duplicate of the top of the portrait gives the curls a small lift/wobble illusion. -->
+          <img class="hair-echo" id="hairEcho" src="character-original.jpeg" alt="" aria-hidden="true" draggable="false">
+          <div class="impact-stars" id="impactStars" aria-hidden="true">✦ ✧ ✦</div>
+          <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Touch and pull the character's hair"></button>
+          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe across the character's cheeks"></button>
         </div>
         <div class="speech-bubble" id="speechBubble" role="status" aria-live="polite"></div>
+        <div class="gesture-hint" id="gestureHint" aria-hidden="true">☝️</div>
       </div>
+
       <div class="instruction-card" id="instructionCard">
-        <div class="your-turn">YOUR TURN <span>😈</span></div>
-        <p><span class="gesture">☝️</span> Tap his <b>hair</b> to pull it.</p>
-        <p><span class="gesture">🤏</span> Tap or swipe his <b>cheeks</b> to slap.</p>
-        <small>Don't be too gentle... apparently 😶</small>
+        <div class="your-turn">YOUR TURN <span>🌷</span></div>
+        <p><span class="gesture">☝️</span> Touch and pull his <b>hair</b>.</p>
+        <p><span class="gesture">🤏</span> Tap or swipe his <b>cheeks</b>.</p>
+        <small>He says he's sorry. His curls disagree. 😶</small>
       </div>
       <div class="bottom-row">
         <button id="backToApology" class="replay-button" type="button">Back to my apology ↶</button>
-        <p class="hint" id="hint">Try tapping his hair or cheeks! ✨</p>
+        <p class="hint" id="hint">Try a little tug on his curls! ✨</p>
       </div>
     </section>
 
