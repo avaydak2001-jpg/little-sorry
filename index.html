@@ -6,14 +6,13 @@
   <meta name="theme-color" content="#fff4ed">
   <meta name="description" content="A tiny apology, a very serious punishment, and one very worried curly-haired character.">
   <title>A Little Sorry 🌷</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261117-final2">
 </head>
 <body>
   <main class="app">
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
-    <!-- APOLGY LANDING SCREEN: stays here until the button is pressed. -->
     <section id="apology" class="screen apology-screen active" aria-labelledby="sorryTitle">
       <div class="floaties" aria-hidden="true">
         <span class="floatie f1">🌷</span><span class="floatie f2">✨</span>
@@ -21,6 +20,7 @@
         <span class="floatie f5">🫧</span><span class="floatie f6">💌</span>
         <span class="floatie f7">⭐</span><span class="floatie f8">🦋</span>
         <span class="floatie f9">🌸</span><span class="floatie f10">✦</span>
+        <span class="floatie f11">🐣</span><span class="floatie f12">🍓</span>
       </div>
 
       <div class="apology-card">
@@ -47,7 +47,6 @@
       <div class="bottom-confetti" aria-hidden="true">✧　🌸　✦　🫧　🌷　✧</div>
     </section>
 
-    <!-- INTERACTION SCREEN -->
     <section id="characterStage" class="screen character-screen" aria-labelledby="punishmentTitle" hidden>
       <div class="top-copy">
         <p class="eyebrow">A very serious matter ✦</p>
@@ -61,25 +60,27 @@
       </div>
 
       <div class="speech-area" aria-live="polite">
-        <div class="speech-bubble" id="speechBubble" role="status">I'm ready... I think. 🥺</div>
+        <div class="speech-bubble show" id="speechBubble" role="status">I'm ready... I think. 🥺</div>
       </div>
 
-      <div class="character-window" id="characterWindow">
+      <div class="character-window">
         <div class="character-wrap idle" id="characterWrap">
-          <img id="character" src="character-front.jpeg" alt="Front-facing curly-haired cartoon character looking apologetic" draggable="false">
+          <img id="character" src="character-front-20261117.jpeg" width="1077" height="1210" alt="Front-facing curly-haired cartoon character looking apologetic" draggable="false">
           <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Tap or pull his curly hair" title="Tap or pull his hair"></button>
-          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe his cheeks" title="Tap or swipe his cheeks"></button>
+          <button class="hotspot face-zone" id="faceZone" type="button" aria-label="Tap or swipe his cheeks to trigger a cheek reaction" title="Tap or swipe his cheeks"></button>
           <div class="impact-stars" id="impactStars" aria-hidden="true">✦ ✧ ✦</div>
           <div class="gesture-hint" id="gestureHint" aria-hidden="true">☝️</div>
-          <div class="hair-tug-mark" id="hairTugMark" aria-hidden="true">〰️</div>
+          <div class="hair-tug-mark" aria-hidden="true">〰️</div>
+          <div class="touch-label hair-label" aria-hidden="true">HAIR</div>
+          <div class="touch-label face-label" aria-hidden="true">CHEEKS</div>
         </div>
       </div>
 
-      <div class="instruction-card" id="instructionCard">
+      <div class="instruction-card">
         <div class="your-turn">YOUR TURN <span aria-hidden="true">🌷</span></div>
         <div class="instruction-line"><span class="gesture">☝️</span><p>Tap or gently pull his <b>hair</b>.</p></div>
-        <div class="instruction-line"><span class="gesture">🤏</span><p>Tap or swipe his <b>cheeks</b>.</p></div>
-        <small>He says he's sorry. His curls have their own opinion. 😶</small>
+        <div class="instruction-line"><span class="gesture">🤚</span><p>Tap or swipe his <b>cheeks</b>.</p></div>
+        <small>Top curls = hair reaction. Face = cheek reaction. No mix-ups! 😌</small>
       </div>
 
       <div class="fun-meter" aria-label="Punishment level">
@@ -96,6 +97,6 @@
 
     <footer>Made with tulips, apologies & questionable decisions ✿</footer>
   </main>
-  <script src="script.js" defer></script>
+  <script src="script.js?v=20261117-final2" defer></script>
 </body>
 </html>

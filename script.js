@@ -10,13 +10,13 @@
   const hint = $('hint');
   const gestureHint = $('gestureHint');
   const hairZone = $('hairZone');
-  const cheekZone = $('cheekZone');
+  const faceZone = $('faceZone');
   const soundToggle = $('soundToggle');
+  const characterImage = $('character');
 
-  // Stop safely if the page markup is incomplete.
-  if (!apology || !stage || !wrap || !bubble || !hairZone || !cheekZone) return;
+  if (!apology || !stage || !wrap || !bubble || !hairZone || !faceZone || !characterImage) return;
 
-  // These are the 14 approved lines, in the agreed order.
+  // Keep the 14 approved reaction sentences exactly as agreed.
   const hairLines = [
     'OUCH! My curls have feelings! 😭',
     'Careful! This hairstyle took 3 hours! 😵‍💫',
@@ -42,12 +42,10 @@
   let starTimer = 0;
   let hairCount = 0;
   let cheekCount = 0;
-  let hairGesture = null;
-  let cheekGesture = null;
-  let ignoreHairClickUntil = 0;
-  let ignoreCheekClickUntil = 0;
   let soundOn = true;
   let audioContext = null;
+  let activeGesture = null;
+  let suppressNextPointerClick = false;
 
   function showBubble(message) {
     window.clearTimeout(bubbleTimer);
@@ -55,7 +53,8 @@
     bubble.classList.remove('show');
     void bubble.offsetWidth;
     bubble.classList.add('show');
-    bubbleTimer = window.setTimeout(() => bubble.classList.remove('show'), 3000);
+    // Keep each reaction visible long enough to read; a new touch replaces it.
+    bubbleTimer = window.setTimeout(() => bubble.classList.remove('show'), 5200);
   }
 
   function showStars(kind) {
@@ -76,8 +75,7 @@
     $('hairCount').textContent = String(hairCount);
     $('cheekCount').textContent = String(cheekCount);
     const total = hairCount + cheekCount;
-    const level = Math.min(total, 10);
-    $('meterFill').style.width = `${level * 10}%`;
+    $('meterFill').style.width = `${Math.min(total, 10) * 10}%`;
     const labels = ['Still forgiving…', 'A little upset…', 'Questioning everything…', 'Calling my lawyer…', 'Curls filing a complaint!'];
     const labelIndex = total === 0 ? 0 : total < 3 ? 1 : total < 5 ? 2 : total < 8 ? 3 : 4;
     $('meterLabel').textContent = labels[labelIndex];
@@ -91,7 +89,7 @@
     wrap.classList.remove('hair-pull', 'cheek-slap');
     wrap.classList.add('idle');
     showBubble("I'm ready... I think. 🥺");
-    hint.textContent = 'Go on… his curls are waiting! ✨';
+    hint.textContent = 'Top curls for hair. Face for cheek reactions! ✨';
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
@@ -131,10 +129,8 @@
   function hairAction(distance = 0) {
     const pull = Math.max(0, Math.min(1, Math.abs(distance) / 90));
     wrap.style.setProperty('--pull', `${18 + pull * 22}px`);
-    startReaction(
-      'hair-pull', hairLines[hairCount % hairLines.length], 'hair-stars', '☝️',
-      'He is reconsidering his apology… 🌼', 900
-    );
+    startReaction('hair-pull', hairLines[hairCount % hairLines.length], 'hair-stars', '☝️',
+      'He is reconsidering his apology… 🌼', 900);
     hairCount += 1;
     updateCounters();
     playCartoonSound('hair');
@@ -143,10 +139,8 @@
   function cheekAction(distance = 0) {
     const swipe = Math.max(-1, Math.min(1, distance / 100));
     wrap.style.setProperty('--swipe', `${swipe * 12}px`);
-    startReaction(
-      'cheek-slap', cheekLines[cheekCount % cheekLines.length], 'cheek-stars', '💥',
-      'That one definitely left an impression 😅', 760
-    );
+    startReaction('cheek-slap', cheekLines[cheekCount % cheekLines.length], 'cheek-stars', '💥',
+      'That one definitely left an impression 😅', 760);
     cheekCount += 1;
     updateCounters();
     playCartoonSound('cheek');
@@ -165,7 +159,6 @@
     }
   }
 
-  // Small synthesized cartoon cues only. There is no background music.
   function playCartoonSound(kind) {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -200,50 +193,54 @@
     if (soundOn) getAudioContext();
   });
 
-  // Pointer events support touch, mouse and stylus. Click is also retained for keyboard use.
+  // Pointer-up activates the zone where the gesture started. Keyboard activation
+  // is handled through click(detail === 0), avoiding duplicate touch reactions.
   function wireHotspot(button, type) {
-    const isHair = type === 'hair';
     button.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'mouse' && event.button !== 0) return;
-      const data = { id: event.pointerId, x: event.clientX, y: event.clientY };
-      if (isHair) hairGesture = data; else cheekGesture = data;
-      try { button.setPointerCapture(event.pointerId); } catch (_) { /* optional */ }
+      activeGesture = { type, pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+      suppressNextPointerClick = false;
+      try { button.setPointerCapture(event.pointerId); } catch (_) { /* pointer capture is optional */ }
+      event.preventDefault();
     });
 
     button.addEventListener('pointerup', (event) => {
-      const data = isHair ? hairGesture : cheekGesture;
-      if (!data || data.id !== event.pointerId) return;
-      const dx = event.clientX - data.x;
-      const dy = event.clientY - data.y;
-      if (isHair) {
-        hairGesture = null;
-        ignoreHairClickUntil = Date.now() + 700;
-        hairAction(data.y - event.clientY || Math.abs(dx));
+      if (!activeGesture || activeGesture.type !== type || activeGesture.pointerId !== event.pointerId) return;
+      const gesture = activeGesture;
+      activeGesture = null;
+      const dx = event.clientX - gesture.x;
+      const dy = event.clientY - gesture.y;
+      suppressNextPointerClick = true;
+      if (type === 'hair') {
+        hairAction(Math.max(Math.abs(dx), Math.abs(dy)));
       } else {
-        cheekGesture = null;
-        ignoreCheekClickUntil = Date.now() + 700;
         cheekAction(Math.hypot(dx, dy) > 10 ? dx : 0);
       }
       event.preventDefault();
     });
 
-    button.addEventListener('pointercancel', () => {
-      if (isHair) hairGesture = null; else cheekGesture = null;
-    });
+    button.addEventListener('pointercancel', () => { activeGesture = null; });
+    button.addEventListener('lostpointercapture', () => { activeGesture = null; });
 
-    button.addEventListener('click', () => {
-      // Ignore the synthetic click that follows a pointer gesture.
-      if (isHair) {
-        if (Date.now() < ignoreHairClickUntil) return;
-        hairAction(0);
-      } else {
-        if (Date.now() < ignoreCheekClickUntil) return;
-        cheekAction(0);
+    button.addEventListener('click', (event) => {
+      if (event.detail !== 0) {
+        // Ignore pointer-generated clicks because pointerup already reacted.
+        if (suppressNextPointerClick) {
+          suppressNextPointerClick = false;
+          return;
+        }
+        return;
       }
+      if (type === 'hair') hairAction(0); else cheekAction(0);
     });
   }
 
   wireHotspot(hairZone, 'hair');
-  wireHotspot(cheekZone, 'cheek');
+  wireHotspot(faceZone, 'cheek');
+  characterImage.addEventListener('error', () => {
+    bubble.textContent = 'The character image did not load. Check character-front-20261117.jpeg is beside index.html.';
+    bubble.classList.add('show');
+  });
+
   updateCounters();
 })();
