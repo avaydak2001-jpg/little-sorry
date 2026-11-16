@@ -5,83 +5,117 @@ const bubble = document.getElementById('speechBubble');
 const lines = document.getElementById('reactionLines');
 const hint = document.getElementById('hint');
 let bubbleTimer;
-let introTimers = [];
+let animationTimers = [];
 
-function clearIntro(){ introTimers.forEach(clearTimeout); introTimers=[]; }
-function showStage(){
-  clearIntro();
-  apology.classList.remove('active');
-  stage.classList.add('active');
-  requestAnimationFrame(()=>wrap.classList.add('zoomed'));
-  introTimers.push(setTimeout(()=>wrap.classList.add('idle'),1500));
+function clearAnimationTimers() {
+  animationTimers.forEach(clearTimeout);
+  animationTimers = [];
 }
-function replay(){
-  clearIntro();
+
+function showStage() {
   hideBubble();
-  wrap.classList.remove('zoomed','idle','hair-pull','cheek-slap');
-  stage.classList.remove('active');
-  apology.classList.add('active');
-  setTimeout(showStage,2400);
+  clearAnimationTimers();
+  apology.classList.remove('active');
+  apology.hidden = true;
+  stage.hidden = false;
+  stage.classList.add('active');
+  wrap.classList.remove('idle', 'hair-pull', 'cheek-slap');
+  requestAnimationFrame(() => wrap.classList.add('zoomed'));
+  animationTimers.push(setTimeout(() => wrap.classList.add('idle'), 1350));
+  hint.textContent = 'Try tapping his hair or cheeks! ✨';
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
-document.getElementById('skipIntro').addEventListener('click',showStage);
-document.getElementById('replay').addEventListener('click',replay);
 
-function showBubble(message){
-  clearTimeout(bubbleTimer);
-  bubble.textContent=message;
-  bubble.classList.add('show');
-  bubbleTimer=setTimeout(()=>bubble.classList.remove('show'),2100);
+function returnToApology() {
+  hideBubble();
+  clearAnimationTimers();
+  wrap.classList.remove('zoomed', 'idle', 'hair-pull', 'cheek-slap');
+  lines.classList.remove('show');
+  stage.classList.remove('active');
+  stage.hidden = true;
+  apology.hidden = false;
+  apology.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
-function hideBubble(){clearTimeout(bubbleTimer);bubble.classList.remove('show');}
-function animate(kind){
-  wrap.classList.remove('idle','hair-pull','cheek-slap');
+
+document.getElementById('beginPunishment').addEventListener('click', showStage);
+document.getElementById('backToApology').addEventListener('click', returnToApology);
+
+function showBubble(message) {
+  clearTimeout(bubbleTimer);
+  bubble.textContent = message;
+  bubble.classList.add('show');
+  bubbleTimer = setTimeout(() => bubble.classList.remove('show'), 2300);
+}
+
+function hideBubble() {
+  clearTimeout(bubbleTimer);
+  bubble.classList.remove('show');
+}
+
+function animate(kind) {
+  wrap.classList.remove('idle', 'hair-pull', 'cheek-slap');
   lines.classList.remove('show');
   void wrap.offsetWidth;
   wrap.classList.add(kind);
   lines.classList.add('show');
-  setTimeout(()=>{wrap.classList.remove(kind);wrap.classList.add('idle');},700);
-  setTimeout(()=>lines.classList.remove('show'),550);
+  animationTimers.push(setTimeout(() => {
+    wrap.classList.remove(kind);
+    wrap.classList.add('idle');
+  }, 720));
+  animationTimers.push(setTimeout(() => lines.classList.remove('show'), 560));
 }
-const hairLines=[
+
+const hairLines = [
   'OUCH! My curls have feelings! 😭',
   'Careful! This hairstyle took 3 hours! 😵‍💫',
   'HEY! Not the premium curls! 🥲',
   'I said sorry, not bald! 😭'
 ];
-const cheekLines=[
+const cheekLines = [
   'Oiii! That cheek is under protection! 😳',
   'My face just changed its PIN! 🫨',
   'AYYO! I saw my ancestors! 😵',
   'Okay okay… I deserve that. 🥺'
 ];
-let hairCount=0,cheekCount=0;
-let suppressCheekClick=false;
-function hairAction(){
+let hairCount = 0;
+let cheekCount = 0;
+let suppressCheekClick = false;
+
+function hairAction() {
   animate('hair-pull');
-  showBubble(hairLines[hairCount%hairLines.length]);
+  showBubble(hairLines[hairCount % hairLines.length]);
   hairCount++;
-  hint.textContent='He is reconsidering his apology...';
+  hint.textContent = 'He is reconsidering his apology... 🌼';
 }
-function cheekAction(){
+
+function cheekAction() {
   animate('cheek-slap');
-  showBubble(cheekLines[cheekCount%cheekLines.length]);
+  showBubble(cheekLines[cheekCount % cheekLines.length]);
   cheekCount++;
-  hint.textContent='That one definitely left an impression 😅';
+  hint.textContent = 'That one definitely left an impression 😅';
 }
-document.getElementById('hairZone').addEventListener('click',hairAction);
-const cheek=document.getElementById('cheekZone');
-let touchStart=null;
-cheek.addEventListener('pointerdown',e=>{touchStart={x:e.clientX,y:e.clientY};});
-cheek.addEventListener('pointerup',e=>{
-  if(!touchStart)return;
-  const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;
-  if(Math.hypot(dx,dy)>18) {
-    cheekAction();
-    suppressCheekClick=true;
-    setTimeout(()=>{suppressCheekClick=false;},500);
-  }
-  touchStart=null;
+
+document.getElementById('hairZone').addEventListener('click', hairAction);
+const cheek = document.getElementById('cheekZone');
+let touchStart = null;
+cheek.addEventListener('pointerdown', event => {
+  touchStart = { x: event.clientX, y: event.clientY };
 });
-cheek.addEventListener('click',()=>{if(!suppressCheekClick)cheekAction();});
-// The page begins with the apology, then reveals the character and instructions.
-introTimers.push(setTimeout(showStage,3300));
+cheek.addEventListener('pointerup', event => {
+  if (!touchStart) return;
+  const dx = event.clientX - touchStart.x;
+  const dy = event.clientY - touchStart.y;
+  if (Math.hypot(dx, dy) > 18) {
+    cheekAction();
+    suppressCheekClick = true;
+    setTimeout(() => { suppressCheekClick = false; }, 500);
+  }
+  touchStart = null;
+});
+cheek.addEventListener('pointercancel', () => { touchStart = null; });
+cheek.addEventListener('click', () => {
+  if (!suppressCheekClick) cheekAction();
+});
+
+// No automatic timer: the apology remains on screen until the visitor chooses to continue.

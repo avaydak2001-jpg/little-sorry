@@ -4,34 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fff3ed">
-  <title>A Little Sorry 💗</title>
+  <title>A Little Sorry 🌷</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
-    <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
-    <section id="apology" class="screen apology-screen">
-      <div class="tiny-heart">♡</div>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <!-- This is the first screen. It stays visible until the button is pressed. -->
+    <section id="apology" class="screen apology-screen active" aria-labelledby="sorryTitle">
+      <div class="floral-mark" aria-hidden="true">🌷 ✦ 🌼</div>
       <p class="eyebrow">A little something for you</p>
-      <h1 class="sorry-title">I'm <span>Sorry</span><i>...</i></h1>
+      <h1 id="sorryTitle" class="sorry-title">I'm <span>Sorry</span><i>...</i></h1>
       <p class="sub-apology">It won't happen again.</p>
-      <div class="sparkles" aria-hidden="true">✦　♡　✦</div>
-      <button id="skipIntro" class="text-button">Open my apology ↓</button>
+      <div class="sparkles" aria-hidden="true">✦　🌷　✧　🌼　✦</div>
+      <p class="landing-note">I have prepared a very serious punishment arrangement.</p>
+      <button id="beginPunishment" class="text-button" type="button">Click here to punish me 😶</button>
+      <p class="tiny-note">No rush. I'll be right here. 🌼</p>
     </section>
 
-    <section id="characterStage" class="screen character-screen" aria-live="polite">
+    <!-- Hidden until the visitor presses the button above. -->
+    <section id="characterStage" class="screen character-screen" aria-live="polite" aria-labelledby="punishmentTitle" hidden>
       <div class="top-copy">
-        <p class="eyebrow">A very serious matter</p>
-        <h2>I accept the <em>punishment</em> <span>🥺</span></h2>
+        <p class="eyebrow">A very serious matter ✦</p>
+        <h2 id="punishmentTitle">I accept the <em>punishment</em> <span>🥺</span></h2>
       </div>
       <div class="character-window" id="characterWindow">
         <div class="character-wrap" id="characterWrap">
           <img id="character" src="character-original.jpeg" alt="Your curly-haired cartoon character">
-          <button class="hotspot hair-zone" id="hairZone" aria-label="Tap the character's hair"></button>
-          <button class="hotspot cheek-zone" id="cheekZone" aria-label="Tap or swipe the character's cheeks"></button>
+          <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Tap the character's hair"></button>
+          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe the character's cheeks"></button>
           <div class="reaction-lines" id="reactionLines" aria-hidden="true">✦　〰　✦</div>
         </div>
-        <div class="speech-bubble" id="speechBubble" role="status"></div>
+        <div class="speech-bubble" id="speechBubble" role="status" aria-live="polite"></div>
       </div>
       <div class="instruction-card" id="instructionCard">
         <div class="your-turn">YOUR TURN <span>😈</span></div>
@@ -40,11 +46,12 @@
         <small>Don't be too gentle... apparently 😶</small>
       </div>
       <div class="bottom-row">
-        <button id="replay" class="replay-button">Replay the apology ↻</button>
-        <p class="hint" id="hint">Try tapping his hair or cheeks!</p>
+        <button id="backToApology" class="replay-button" type="button">Back to my apology ↶</button>
+        <p class="hint" id="hint">Try tapping his hair or cheeks! ✨</p>
       </div>
     </section>
-    <footer>Made with a little mischief & a lot of sorry ♡</footer>
+
+    <footer>Made with tulips, apologies & questionable decisions ✿</footer>
   </main>
   <script src="script.js"></script>
 </body>
