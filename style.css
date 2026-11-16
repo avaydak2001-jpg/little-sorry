@@ -50,11 +50,85 @@ footer{position:relative;z-index:2;font-size:10px;color:#b48684;padding:8px 0 12
 @keyframes flowerFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
 @keyframes bubblePop{0%{transform:scale(.65)}75%{transform:scale(1.08)}100%{transform:scale(1)}}
 @keyframes idle{0%,100%{translate:0 0}50%{translate:0 -4px}}
-@keyframes hairBody{0%,100%{transform:translateY(2px) scale(1.48) rotate(0)}18%{transform:translateY(12px) scale(1.48) rotate(-3deg)}42%{transform:translateY(-8px) scale(1.48) rotate(2deg)}68%{transform:translateY(4px) scale(1.46) rotate(-1deg)}}
-@keyframes cheekBody{0%,100%{transform:translateY(2px) scale(1.48) rotate(0)}18%{transform:translate(calc(var(--swipe,0px) + 12px),2px) scale(1.48) rotate(6deg)}42%{transform:translate(calc(var(--swipe,0px) - 10px),2px) scale(1.48) rotate(-5deg)}68%{transform:translate(3px,2px) scale(1.48) rotate(2deg)}}
+@keyframes hairBody{0%,100%{transform:translateY(0) scale(1.04) rotate(0)}18%{transform:translateY(8px) scale(1.04) rotate(-3deg)}42%{transform:translateY(-5px) scale(1.04) rotate(2deg)}68%{transform:translateY(3px) scale(1.03) rotate(-1deg)}}
+@keyframes cheekBody{0%,100%{transform:translateY(0) scale(1.04) rotate(0)}18%{transform:translate(calc(var(--swipe,0px) + 8px),0) scale(1.04) rotate(5deg)}42%{transform:translate(calc(var(--swipe,0px) - 7px),0) scale(1.04) rotate(-4deg)}68%{transform:translate(2px,0) scale(1.03) rotate(2deg)}}
 @keyframes curlStretch{0%{transform:translateY(0) scaleY(1) rotate(0)}22%{transform:translateY(calc(var(--pull,28px) * -1)) scaleY(1.18) rotate(-2deg)}48%{transform:translateY(-7px) scaleY(.92) rotate(2deg)}72%{transform:translateY(3px) scaleY(1.06) rotate(-1deg)}100%{transform:translateY(0) scaleY(1) rotate(0)}}
 @keyframes impactPop{0%{opacity:0;transform:scale(.4) rotate(-12deg)}30%{opacity:1;transform:scale(1.25) rotate(8deg)}70%{opacity:1;transform:scale(1) rotate(-4deg)}100%{opacity:0;transform:scale(.8) rotate(0)}}
 @keyframes gesturePop{0%{opacity:0;transform:translate(-50%,12px) scale(.5)}30%{opacity:1;transform:translate(-50%,-8px) scale(1.2)}100%{opacity:0;transform:translate(-50%,-25px) scale(.8)}}
 @media(min-width:600px){.character-window{height:420px}.character-wrap{width:240px}.character-wrap.zoomed{transform:translateY(0) scale(1.5)}}
 @media(max-height:720px){.character-screen{padding-top:10px}.character-window{height:42svh;min-height:245px}.instruction-card{padding:9px 14px}.instruction-card p{margin:4px 0}.character-wrap.zoomed{transform:translateY(0) scale(1.35)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* Version 2.1 mobile layout repair: keep the heading, portrait and instructions
+   in normal document flow so nothing is clipped on iPhone-sized screens. */
+html { min-height: 100%; }
+body { min-height: 100%; overflow-x: hidden; }
+.app {
+  min-height: 100svh;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.character-screen {
+  min-height: 0;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  padding-top: clamp(12px, 2.2svh, 22px);
+  padding-bottom: 16px;
+  gap: 0;
+}
+.top-copy { position: relative; z-index: 4; width: 100%; flex: 0 0 auto; }
+.top-copy .eyebrow { margin: 4px 0 7px; }
+.top-copy h2 {
+  font-size: clamp(24px, 6.2vw, 34px);
+  line-height: 1.15;
+  margin: 0 auto 5px;
+}
+.character-window {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  margin: 8px auto 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.character-wrap {
+  width: auto;
+  height: clamp(245px, 39svh, 355px);
+  max-width: 100%;
+  aspect-ratio: 603 / 1160;
+  align-self: center;
+  transform: translateY(0) scale(.98);
+  transform-origin: 50% 35%;
+}
+.character-wrap.zoomed { transform: translateY(0) scale(1.04); }
+.character-wrap img#character {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.instruction-card {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 390px);
+  margin: 10px auto 0;
+  padding: 13px 16px;
+  flex: 0 0 auto;
+}
+.instruction-card p { font-size: 14px; line-height: 1.4; }
+.bottom-row { margin: 12px auto 0; flex: 0 0 auto; }
+footer { width: 100%; flex: 0 0 auto; padding: 12px 0 max(14px, env(safe-area-inset-bottom)); }
+@media (max-height: 720px) {
+  .character-wrap { height: clamp(220px, 35svh, 285px); }
+  .instruction-card { padding: 10px 13px; }
+  .instruction-card p { margin: 4px 0; }
+}
+@media (min-width: 600px) {
+  .character-wrap { height: 390px; }
+}
