@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#fff3ed">
+  <meta name="theme-color" content="#fff4ed">
+  <meta name="description" content="A tiny apology, a very serious punishment, and one very worried curly-haired character.">
   <title>A Little Sorry 🌷</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,43 +13,84 @@
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
+    <!-- APOLGY LANDING SCREEN: stays here until the button is pressed. -->
     <section id="apology" class="screen apology-screen active" aria-labelledby="sorryTitle">
-      <div class="floral-mark" aria-hidden="true">🌷 ✦ 🌼</div>
-      <p class="eyebrow">A little something for you</p>
-      <h1 id="sorryTitle" class="sorry-title">I'm <span>Sorry</span><i>...</i></h1>
-      <p class="sub-apology">It won't happen again.</p>
-      <div class="sparkles" aria-hidden="true">✦　🌷　✧　🌼　✦</div>
-      <p class="landing-note">I have prepared a very serious punishment arrangement.</p>
-      <button id="beginPunishment" class="primary-button" type="button">Click here to punish me 🌼</button>
-      <p class="tiny-note">No rush. I'll be right here. 🌷</p>
+      <div class="floaties" aria-hidden="true">
+        <span class="floatie f1">🌷</span><span class="floatie f2">✨</span>
+        <span class="floatie f3">🥺</span><span class="floatie f4">🌼</span>
+        <span class="floatie f5">🫧</span><span class="floatie f6">💌</span>
+        <span class="floatie f7">⭐</span><span class="floatie f8">🦋</span>
+        <span class="floatie f9">🌸</span><span class="floatie f10">✦</span>
+      </div>
+
+      <div class="apology-card">
+        <div class="card-sticker sticker-left" aria-hidden="true">🌷</div>
+        <div class="card-sticker sticker-right" aria-hidden="true">✨</div>
+        <div class="floral-mark" aria-hidden="true">✿　🌼　✿</div>
+        <p class="eyebrow">A tiny note from a very sorry person</p>
+        <div class="title-wrap">
+          <h1 id="sorryTitle" class="sorry-title">I'm <span>Sorry</span><i>...</i></h1>
+          <span class="title-sparkle" aria-hidden="true">✧</span>
+        </div>
+        <p class="sub-apology">It won't happen again.</p>
+        <div class="doodle-divider" aria-hidden="true"><span>✦</span><span>🌷</span><span>✦</span></div>
+        <div class="little-letter">
+          <span class="letter-pin" aria-hidden="true">📌</span>
+          <p>I know I messed up. I brought flowers, a sincere apology, and absolutely no defence. 🥺</p>
+        </div>
+        <p class="landing-note">I have also prepared a very serious punishment arrangement.</p>
+        <button id="beginPunishment" class="primary-button" type="button">
+          <span>Click here to punish me</span><span class="button-emoji" aria-hidden="true">🌼</span>
+        </button>
+        <p class="tiny-note">Please be gentle. The hair is emotionally attached. 😶</p>
+      </div>
+      <div class="bottom-confetti" aria-hidden="true">✧　🌸　✦　🫧　🌷　✧</div>
     </section>
 
+    <!-- INTERACTION SCREEN -->
     <section id="characterStage" class="screen character-screen" aria-labelledby="punishmentTitle" hidden>
       <div class="top-copy">
         <p class="eyebrow">A very serious matter ✦</p>
         <h2 id="punishmentTitle">I accept the <em>punishment</em> 🥺</h2>
+        <p class="stage-subtitle">Your forgiveness is pending. My dignity is not. 🫠</p>
+      </div>
+
+      <div class="score-row" aria-label="Your interaction counts">
+        <div class="score-pill">🤏 Hair pulls <b id="hairCount">0</b></div>
+        <div class="score-pill">💥 Cheek slaps <b id="cheekCount">0</b></div>
+      </div>
+
+      <div class="speech-area" aria-live="polite">
+        <div class="speech-bubble" id="speechBubble" role="status">I'm ready... I think. 🥺</div>
       </div>
 
       <div class="character-window" id="characterWindow">
-        <div class="character-wrap" id="characterWrap">
-          <img id="character" src="character-zoom.jpeg" alt="A curly-haired cartoon character looking apologetic" draggable="false">
-          <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Tap or pull his curly hair"></button>
-          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe his cheeks"></button>
+        <div class="character-wrap idle" id="characterWrap">
+          <img id="character" src="character-front.jpeg" alt="Front-facing curly-haired cartoon character looking apologetic" draggable="false">
+          <button class="hotspot hair-zone" id="hairZone" type="button" aria-label="Tap or pull his curly hair" title="Tap or pull his hair"></button>
+          <button class="hotspot cheek-zone" id="cheekZone" type="button" aria-label="Tap or swipe his cheeks" title="Tap or swipe his cheeks"></button>
           <div class="impact-stars" id="impactStars" aria-hidden="true">✦ ✧ ✦</div>
           <div class="gesture-hint" id="gestureHint" aria-hidden="true">☝️</div>
-          <div class="speech-bubble" id="speechBubble" role="status" aria-live="polite"></div>
+          <div class="hair-tug-mark" id="hairTugMark" aria-hidden="true">〰️</div>
         </div>
       </div>
 
       <div class="instruction-card" id="instructionCard">
-        <div class="your-turn">YOUR TURN <span>🌷</span></div>
-        <p><span class="gesture">☝️</span> Tap or pull his <b>hair</b>.</p>
-        <p><span class="gesture">🤏</span> Tap or swipe his <b>cheeks</b>.</p>
-        <small>He says he's sorry. His curls disagree. 😶</small>
+        <div class="your-turn">YOUR TURN <span aria-hidden="true">🌷</span></div>
+        <div class="instruction-line"><span class="gesture">☝️</span><p>Tap or gently pull his <b>hair</b>.</p></div>
+        <div class="instruction-line"><span class="gesture">🤏</span><p>Tap or swipe his <b>cheeks</b>.</p></div>
+        <small>He says he's sorry. His curls have their own opinion. 😶</small>
       </div>
+
+      <div class="fun-meter" aria-label="Punishment level">
+        <div class="meter-label"><span>Oops-o-meter</span><b id="meterLabel">Still forgiving…</b></div>
+        <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+      </div>
+
       <div class="bottom-row">
-        <button id="backToApology" class="primary-button" type="button">Back to my apology ↶</button>
-        <p class="hint" id="hint" aria-live="polite">Go on… his curls are waiting! ✨</p>
+        <button id="soundToggle" class="sound-button" type="button" aria-pressed="true">🔊 Cartoon sounds: ON</button>
+        <button id="backToApology" class="primary-button back-button" type="button">Back to my apology ↶</button>
+        <p class="hint" id="hint">Go on… his curls are waiting! ✨</p>
       </div>
     </section>
 

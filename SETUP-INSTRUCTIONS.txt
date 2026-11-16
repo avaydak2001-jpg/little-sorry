@@ -1,0 +1,22 @@
+A LITTLE SORRY — FINAL WEBSITE UPDATE
+
+FILES IN THIS ZIP
+- index.html
+- style.css
+- script.js
+- character-front.jpeg
+
+HOW TO UPDATE YOUR EXISTING GITHUB REPOSITORY
+1. Extract this ZIP on your iPhone.
+2. Open your existing GitHub repository: avaydak2001-jpg/little-sorry.
+3. Upload the four website files listed above to the repository ROOT (the same level as your existing index.html).
+4. When GitHub asks about files with the same names, choose the option to replace/update them, then commit the changes to the main branch.
+5. Keep your existing README and assets folder. They do not need to be deleted or replaced.
+6. Wait for the GitHub Pages deployment to finish, then refresh your site. On iPhone Safari, a private tab or a hard refresh can help if the old version is cached.
+
+IMPORTANT
+- Upload all four website files together so the HTML, CSS, JavaScript and character image stay in sync.
+- Keep the filename character-front.jpeg exactly as written and in the repository root.
+- The apology screen does not auto-advance. Tap the button to open the character interaction page.
+- Hair and cheek reactions cycle through the approved seven lines each.
+- Cartoon sound effects are generated locally in the browser; there is no background music. Use the sound toggle to mute them.
