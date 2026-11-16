@@ -20,21 +20,23 @@
   const hairLines = [
     'OUCH! My curls have feelings! 😭',
     'Careful! This hairstyle took 3 hours! 😵‍💫',
-    'HEY! Not the premium curls! 🥲',
+    'Papam my hair 😭',
     'I said sorry, not bald! 😭',
-    'My barber is going to hear about this! 😤',
+    'Please, don’t make me bald, I am yet to get married 🙏',
     "I'm sorry, okay? Why are you still looking at me like that? 🥺",
-    'Ayyo! My hair has suffered more than I did! 🥺'
+    'Ayyo! My hair has suffered more than I did! 🥺',
+    'Amuuuu sorry re…. My hairs already started regretting'
   ];
 
   const cheekLines = [
     'AYYO! I saw my ancestors! 😵',
-    'My face just changed its PIN! 🫨',
-    'Oiii! These cheeks are under protection! 😳',
+    'Didn’t knew those hands can be so ruthless 🙌',
+    'Baboaaa 🫨…. I think I am left with two tooth less',
     'Okay okay… I deserve that. 🥺',
     'Was that a slap or a software update?! 😭',
     'Abba! My cheeks have officially resigned! 😭',
-    'Ammaaa! I came here to say sorry, not attend a boxing match! 🥊'
+    'Ammaaa! I came here to say sorry, not attend a boxing match! 🥊',
+    'Show some mercy Oppa 😩'
   ];
 
   let bubbleTimer = 0;
